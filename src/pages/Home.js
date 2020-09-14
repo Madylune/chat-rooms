@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { signinAsGuest } from '../helpers/auth'
+import Header from '../components/Header'
+import styled from 'styled-components'
+
+const StyledHome = styled.div`
+  text-align: center;
+`
 
 const Home = ({ history }) => {
   const [ error, setError ] = useState(null)
@@ -19,8 +25,8 @@ const Home = ({ history }) => {
   }
   
   return (
-    <div>
-      <h1>Chat Rooms</h1>
+    <StyledHome>
+      <Header />
       <p>Join a room and chat with other people or create yours to invite your friends !</p>
 
       <p>Create your account: <Link to="/signup">Sign Up</Link></p>
@@ -39,7 +45,7 @@ const Home = ({ history }) => {
         {error ? <p>{error}</p> : null}
         <button type="submit">Start chatting !</button>
       </form>
-    </div>
+    </StyledHome>
   )
 }
 

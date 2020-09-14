@@ -1,9 +1,34 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import { auth, db } from '../services/firebase'
 import { writeMessages } from '../helpers/db'
-import { signout } from '../helpers/auth'
-import map from 'lodash/fp/map'
 import get from 'lodash/fp/get'
+import map from 'lodash/fp/map'
+import Message from '../components/Message'
+import Header from '../components/Header'
+
+const StyledChat = styled.div`
+  background-color: #a0d3ff;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledTitle = styled.h1`
+  color: #1977af;
+`
+
+const StyledContent = styled.div`
+  background-color: #ffffff;
+  border: 3px solid #35aef5;
+  border-radius: 20px;
+  padding: 15px;
+  width: 70%;
+  height: 70%;
+`
 
 class Chat extends Component {
   state = {
@@ -43,27 +68,23 @@ class Chat extends Component {
     }
   }
 
-  logout = async() => await signout()
-
   render() {
-    const { messages, user, content, error, writeError } = this.state
+    const { messages, content, error, writeError } = this.state
     return (
-      <div>
-        <div>
-          {map(message => (
-            <div key={get('timestamp', message)}>{get('content', message)}</div>
-          ), messages)}
-        </div>
+      <StyledChat>      
+        <Header />
+        <StyledTitle>General Room</StyledTitle>
+        <StyledContent>
+          {map(message => 
+            <Message key={get('timestamp', message)} message={message} />
+          , messages)}
+        </StyledContent>
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} value={content}></input>
           {error ? <p>{writeError}</p> : null}
           <button type="submit">Send</button>
         </form>
-        <div>
-          Login in as: <strong>{user.email}</strong>
-        </div>
-        <button type="submit" onClick={this.logout}>Signout</button>
-      </div>
+      </StyledChat>
     )
   }
 }
