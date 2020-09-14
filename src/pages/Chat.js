@@ -6,6 +6,8 @@ import get from 'lodash/fp/get'
 import map from 'lodash/fp/map'
 import Message from '../components/Message'
 import Header from '../components/Header'
+import IconButton from '@material-ui/core/IconButton'
+import SendIcon from '@material-ui/icons/Send'
 
 const StyledChat = styled.div`
   background-color: #a0d3ff;
@@ -28,6 +30,29 @@ const StyledContent = styled.div`
   padding: 15px;
   width: 70%;
   height: 70%;
+`
+
+const StyledForm = styled.form`
+  width: 70%;
+  text-align: center;
+  margin: 10px;
+
+  input {
+    width: 80%;
+    height: 40px;
+    border-radius: 20px;
+    border: transparent;
+    padding: 5px 20px;
+    font-size: 16px;
+  }
+`
+
+const StyledIconButton = styled(IconButton)`
+  && {
+    background-color: #1977af;
+    color: #ffffff;
+    margin: 10px;
+  }
 `
 
 class Chat extends Component {
@@ -79,11 +104,13 @@ class Chat extends Component {
             <Message key={get('timestamp', message)} message={message} />
           , messages)}
         </StyledContent>
-        <form onSubmit={this.handleSubmit}>
+        <StyledForm onSubmit={this.handleSubmit}>
           <input onChange={this.handleChange} value={content}></input>
           {error ? <p>{writeError}</p> : null}
-          <button type="submit">Send</button>
-        </form>
+          <StyledIconButton aria-label="send" type="submit">
+            <SendIcon />
+          </StyledIconButton>
+        </StyledForm>
       </StyledChat>
     )
   }

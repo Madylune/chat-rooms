@@ -17,6 +17,6 @@ export const updateUserData = user => {
   currentUser.updateProfile(user).then(() => {
     // Update successful.
   }).catch(error => {
-    // An error happened.
+    console.log('Error updating user data:', error);
   })
 }
