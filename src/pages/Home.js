@@ -43,7 +43,7 @@ const Home = ({ history }) => {
     <StyledHome>
       <Header />
       <StyledContent>
-      <p>Join a room and chat with other people or create yours to invite your friends !</p>
+      <h2>Join a room and chat with other people or create yours to invite your friends !</h2>
 
       <p>Create your account: <Link to="/signup">Sign Up</Link></p>
 

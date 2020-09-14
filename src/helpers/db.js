@@ -22,6 +22,16 @@ export const updateFirebaseNode = async ({ path, entity, query = q => q }) => {
   return entity
 }
 
+export const listenFirebaseNode = async ({ path, onData, query = q => q }) => {
+  const ref = query(db.ref(path))
+  ref.off()
+  ref.on('value', snapshot => {
+    const val = snapshot.val()
+    onData && onData(val)
+  })
+  return path
+}
+
 export const fetchFirebaseNode = async ({ path, query = q => q }) => {
   const snapshot = await query(db.ref(path)).once('value')
   return snapshot.val()
