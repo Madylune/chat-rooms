@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import { signup, updateUserData } from '../helpers/auth'
 import get from 'lodash/fp/get'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
+import Header from '../components/Header'
+
+const StyledForm = styled.form`
+  margin-top: 100px;
+`
 
 const Signup = () => {
   const [ error, setError ] = useState(null)
@@ -31,7 +36,8 @@ const Signup = () => {
 
   return (
   <div>
-    <form onSubmit={handleSubmit}>
+    <Header />
+    <StyledForm onSubmit={handleSubmit}>
       <h1>
         Sign Up
       </h1>
@@ -68,9 +74,7 @@ const Signup = () => {
         {error ? <p>{error}</p> : null}
         <button type="submit" disabled={disabled}>Sign up</button>
       </div>
-      <hr></hr>
-      <p>Already have an account ? <Link to="/login">Login</Link></p>
-    </form>
+    </StyledForm>
   </div>
   )
 }

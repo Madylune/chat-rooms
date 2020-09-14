@@ -8,7 +8,6 @@ import {
 import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Signup from './pages/Signup'
-import Login from './pages/Login'
 import { auth } from './services/firebase'
 import { dispatch } from './services/store'
 import { updateCurrentUser } from './actions/currentUser'
@@ -18,7 +17,7 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) =>
     {...rest}
     render={props => authenticated
       ? <Component {...props} />
-      : <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
+      : <Redirect to={{ pathname: "/", state: { from: props.location } }} />
     }
   />
 
@@ -64,7 +63,6 @@ class App extends Component {
             <Route exact path="/" component={Home}></Route>
             <PrivateRoute path="/chat" authenticated={authenticated} component={Chat}></PrivateRoute>
             <PublicRoute path="/signup" authenticated={authenticated} component={Signup}></PublicRoute>
-            <PublicRoute path="/login" authenticated={authenticated} component={Login}></PublicRoute>
           </Switch>
         </Router>
       )

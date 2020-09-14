@@ -11,6 +11,10 @@ const StyledHome = styled.div`
   text-align: center;
 `
 
+const StyledContent = styled.div`
+  margin-top: 100px;
+`
+
 const Home = ({ history }) => {
   const [ error, setError ] = useState(null)
   const [ username, setUsername ] = useState('')
@@ -38,10 +42,10 @@ const Home = ({ history }) => {
   return (
     <StyledHome>
       <Header />
+      <StyledContent>
       <p>Join a room and chat with other people or create yours to invite your friends !</p>
 
       <p>Create your account: <Link to="/signup">Sign Up</Link></p>
-      <p>Already have an account ? <Link to="/login">Login</Link></p>
 
       <p>Or chat as guest: </p>
       <form onSubmit={handleSubmit}>
@@ -56,6 +60,7 @@ const Home = ({ history }) => {
         {error ? <p>{error}</p> : null}
         <button type="submit">Start chatting !</button>
       </form>
+      </StyledContent>
     </StyledHome>
   )
 }
