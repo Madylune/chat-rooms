@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { signinAsGuest } from '../helpers/auth'
+import { signinAsGuest, updateUserData } from '../helpers/auth'
 import Header from '../components/Header'
 import styled from 'styled-components'
+import get from 'lodash/fp/get'
+import { dispatch } from '../services/store'
+import { updateCurrentUser } from '../actions/currentUser'
 
 const StyledHome = styled.div`
   text-align: center;
@@ -17,6 +20,14 @@ const Home = ({ history }) => {
     setError('')
     try {
       const user = await signinAsGuest()
+      const userData = {
+        ...get('user', user),
+        displayName: username
+      }
+
+      await updateUserData(userData)
+      dispatch(updateCurrentUser(userData))
+
       user && history.push('/chat')
     } catch (err) {
       console.log('err', err.message)

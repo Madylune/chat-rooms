@@ -6,3 +6,9 @@ export const writeMessages = message =>
     timestamp: message.timestamp,
     uid: message.uid
   })
+
+export const createUser = user =>
+  db.ref('/users').push({
+    username: user.username,
+    uid: user.uid
+  })

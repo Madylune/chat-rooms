@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { auth } from '../services/firebase'
 import { signout } from '../helpers/auth'
-import get from 'lodash/fp/get'
+import getOr from 'lodash/fp/getOr'
 
 const Header = () => {
   const [ user, setUser ] = useState()
@@ -16,7 +16,7 @@ const Header = () => {
     <div>
       <img src={require("../assets/chatrooms_logo.png")} height="100px" alt="Logo Chat Rooms" />
       <div>
-        Login in as: <strong>{get('email', user)}</strong>
+        Login in as: <strong>{getOr('email', 'displayName', user)}</strong>
       </div>
       <button type="submit" onClick={logout}>Signout</button>
     </div>

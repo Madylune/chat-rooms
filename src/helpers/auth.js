@@ -11,3 +11,12 @@ export const signout = () =>
 
 export const signinAsGuest = () =>
   auth().signInAnonymously()
+
+export const updateUserData = user => {
+  const currentUser = auth().currentUser
+  currentUser.updateProfile(user).then(() => {
+    // Update successful.
+  }).catch(error => {
+    // An error happened.
+  })
+}

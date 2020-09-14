@@ -10,6 +10,8 @@ import Chat from './pages/Chat'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import { auth } from './services/firebase'
+import { dispatch } from './services/store'
+import { updateCurrentUser } from './actions/currentUser'
 
 const PrivateRoute = ({ component: Component, authenticated, ...rest }) => 
   <Route 
@@ -42,6 +44,7 @@ class App extends Component {
           authenticated: true,
           loading: false
         })
+        dispatch(updateCurrentUser(user))
       } else {
         this.setState({ 
           authenticated: false,
