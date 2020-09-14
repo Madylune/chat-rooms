@@ -21,11 +21,12 @@ const StyledMessage = styled.div`
 
 const Message = ({ message }) => {
   const currentUser = useSelector(state => state.currentUser)
-  const isCurrentUser = get('uid', currentUser) === get('uid', message)
+  const isCurrentUser = get('uid', currentUser) === get('userId', message)
+
   return (
     <StyledWrapper>
       <AvatarBadge />
-      <StyledUsername>{get('uid', message) ? get('uid', message) : 'Anonyme'}</StyledUsername>
+      <StyledUsername>{get('userId', message) ? get('userId', message) : 'Anonyme'}</StyledUsername>
       <StyledMessage isCurrentUser={isCurrentUser}>
         {get('content', message)}
       </StyledMessage>

@@ -1,21 +1,33 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { signup } from '../helpers/auth'
+import { signup, updateUserData } from '../helpers/auth'
+import get from 'lodash/fp/get'
+import { dispatch } from '../services/store'
+import { updateCurrentUser } from '../actions/currentUser'
 
 const Signup = () => {
   const [ error, setError ] = useState(null)
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ username, setUsername ] = useState('')
 
   const handleSubmit = async e => {
     e.preventDefault()
     setError('')
     try {
-      await signup(email, password)
+      const user = await signup(email, password)
+      const userData = {
+        ...get('user', user),
+        displayName: username
+      }
+      await updateUserData(userData)
+      dispatch(updateCurrentUser(userData))
     } catch (err) {
       setError(err.message)
     }
   }
+
+  const disabled = !email || !password || !username
 
   return (
   <div>
@@ -43,8 +55,18 @@ const Signup = () => {
         </input>
       </div>
       <div>
+        <label>Username: </label>
+        <input 
+          placeholder="Username" 
+          name="username" 
+          type="username" 
+          onChange={e => setUsername(e.target.value)}
+          value={username}>
+        </input>
+      </div>
+      <div>
         {error ? <p>{error}</p> : null}
-        <button type="submit">Sign up</button>
+        <button type="submit" disabled={disabled}>Sign up</button>
       </div>
       <hr></hr>
       <p>Already have an account ? <Link to="/login">Login</Link></p>

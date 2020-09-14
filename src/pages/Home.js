@@ -24,7 +24,7 @@ const Home = ({ history }) => {
         ...get('user', user),
         displayName: username
       }
-
+      
       await updateUserData(userData)
       dispatch(updateCurrentUser(userData))
 
