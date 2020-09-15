@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { auth, db } from '../services/firebase'
-import { writeMessages } from '../helpers/db'
+import { writeMessages, fetchRoomByCode } from '../helpers/db'
 import get from 'lodash/fp/get'
 import map from 'lodash/fp/map'
 import Message from '../components/Message'
@@ -93,6 +94,7 @@ const StyledIconButton = styled(IconButton)`
 class Chat extends Component {
   state = {
     user: auth().currentUser,
+    room: undefined,
     messages: [],
     content: '',
     readError: null,
@@ -100,11 +102,14 @@ class Chat extends Component {
   }
 
   async componentDidMount() {
+    const { code } = this.props
     this.setState({ readError: null })
     try {
-      db.ref('/messages').on('value', snapshot => {
+      db.ref('/messages').orderByChild('code').equalTo(code).on('value', snapshot => {
         this.setState({ messages: snapshot.val() })
       })
+      const room = await fetchRoomByCode(code)
+      this.setState({ room })
     } catch (err) {
       this.setState({ readError: err.message })
     }
@@ -129,12 +134,12 @@ class Chat extends Component {
   }
 
   render() {
-    const { messages, content, error, writeError } = this.state
+    const { messages, content, error, writeError, room } = this.state
     return (
       <StyledChat>      
         <Header />
         <StyledContent>
-          <StyledTitle>General Room</StyledTitle>
+          <StyledTitle>{get('title', room)}</StyledTitle>
           <StyledMessages>
             {map(message => 
               <Message key={get('timestamp', message)} message={message} />
@@ -153,4 +158,11 @@ class Chat extends Component {
   }
 }
 
-export default Chat
+const mapStateToProps = (state, { match }) => {
+  const code = get('params.code', match)
+  return {
+    code
+  }
+}
+
+export default connect(mapStateToProps)(Chat)

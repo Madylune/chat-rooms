@@ -1,5 +1,8 @@
 import { db } from '../services/firebase'
 import get from 'lodash/fp/get'
+import flow from 'lodash/fp/flow'
+import sortBy from 'lodash/fp/sortBy'
+import last from 'lodash/fp/last'
 import { generateRoomCode } from './utils'
 
 export const addFirebaseNode = async ({ path, entity }) => {
@@ -82,5 +85,22 @@ export const createRoom = async data => {
     path: '/rooms',
     entity
   })
+  return room
+}
+
+export const fetchRoomByCode = async code => {
+  const rooms = await fetchFirebaseNode({
+    path: '/rooms',
+    query: q => 
+      q
+        .orderByChild('code')
+        .equalTo(code)
+        .limitToLast(1)
+  })
+  const room = flow(
+    sortBy('createdAt'),
+    last
+  )(Object.values(rooms))
+
   return room
 }
