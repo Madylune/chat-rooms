@@ -97,14 +97,11 @@ class Chat extends Component {
     user: auth().currentUser,
     room: undefined,
     messages: [],
-    content: '',
-    readError: null,
-    writeError: null
+    content: ''
   }
 
   async componentDidMount() {
     const { code } = this.props
-    this.setState({ readError: null })
     try {
       db.ref('/messages').orderByChild('room').equalTo(code).on('value', snapshot => {
         this.setState({ messages: snapshot.val() })
@@ -112,7 +109,7 @@ class Chat extends Component {
       const room = await fetchRoomByCode(code)
       this.setState({ room })
     } catch (err) {
-      this.setState({ readError: err.message })
+      console.log("Fail to read messages", err.message )
     }
   }
 
@@ -121,23 +118,22 @@ class Chat extends Component {
   handleSubmit = async e => {
     const { room, user, content } = this.state
     e.preventDefault()
-    this.setState({ writeError: null })
     try {
       const message = {
         content: content,
         timestamp: Date.now(),
         uid: user.uid,
-        room: room.code
+        room: get('code', room) ? get('code', room) : this.props.code
       }
       await writeMessages(message)
       this.setState({ content: '' })
     } catch (err) {
-      this.setState({ writeError: err.message })
+      console.log("Fail to write message", err.message)
     }
   }
 
   render() {
-    const { messages, content, error, writeError, room } = this.state
+    const { messages, content, room } = this.state
     const { code } = this.props
     return (
       <StyledChat>      
@@ -151,7 +147,6 @@ class Chat extends Component {
           </StyledMessages>
           <StyledForm onSubmit={this.handleSubmit}>
             <input onChange={this.handleChange} value={content}></input>
-            {error ? <p>{writeError}</p> : null}
             <StyledIconButton aria-label="send" type="submit">
               <SendIcon />
             </StyledIconButton>

@@ -72,7 +72,6 @@ class Rooms extends Component {
 
   render() {
     const { error, title, access, rooms } = this.state
-    console.log("rooms", rooms)
     return (
       <StyledWrapper>      
         <Header />
