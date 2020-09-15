@@ -7,6 +7,12 @@ import { fetchUserById } from '../helpers/db'
 
 const StyledWrapper = styled.div`
   display: flex;
+  align-items: flex-start;
+  margin: 15px 0;
+`
+
+const StyledUser = styled.div`
+  display: flex;
   align-items: center;
 `
 
@@ -18,7 +24,6 @@ const StyledUsername = styled.div`
 const StyledMessage = styled.div`
   background-color: ${props => props.isCurrentUser ? '#f9d3b2' : '#cbe3fb'};
   border-radius: 40px;
-  margin: 10px;
   padding: 10px 20px;
   width: fit-content;
 `
@@ -38,8 +43,10 @@ const Message = ({ message }) => {
 
   return (
     <StyledWrapper>
-      <AvatarBadge />
-      <StyledUsername>{get('displayName', user) ? get('displayName', user) : 'Anonyme'}:</StyledUsername>
+      <StyledUser>
+        <AvatarBadge />
+        <StyledUsername>{get('displayName', user) ? get('displayName', user) : 'Anonyme'}:</StyledUsername>
+      </StyledUser>
       <StyledMessage isCurrentUser={isCurrentUser}>
         {get('content', message)}
       </StyledMessage>
