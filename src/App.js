@@ -28,7 +28,7 @@ const PublicRoute = ({ component: Component, authenticated, ...rest }) =>
     {...rest}
     render={props => !authenticated
       ? <Component {...props} />
-      : <Redirect to="/rooms" />
+      : <Redirect to={getPath('rooms')} />
     }
   />
 
@@ -62,11 +62,11 @@ class App extends Component {
       : (
         <Router>
           <Switch>
-            <Route exact path="/" component={Home}></Route>
-            <PrivateRoute path="/rooms" authenticated={authenticated} component={Rooms}></PrivateRoute>
+            <Route exact path={getPath('home')} component={Home}></Route>
+            <PrivateRoute path={getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
             <PrivateRoute path={getPath('room', { code: ':code' })} authenticated={authenticated} component={Chat}></PrivateRoute>
-            <PrivateRoute path="/chat" authenticated={authenticated} component={Chat}></PrivateRoute>
-            <PublicRoute path="/signup" authenticated={authenticated} component={Signup}></PublicRoute>
+            {/* <PrivateRoute path="/chat" authenticated={authenticated} component={Chat}></PrivateRoute> */}
+            <PublicRoute path={getPath('signup')} authenticated={authenticated} component={Signup}></PublicRoute>
           </Switch>
         </Router>
       )

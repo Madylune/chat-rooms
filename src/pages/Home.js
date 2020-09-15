@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import get from 'lodash/fp/get'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
+import { getPath } from '../helpers/routes'
 
 const StyledHome = styled.div`
   text-align: center;
@@ -32,7 +33,7 @@ const Home = ({ history }) => {
       await updateUserData(userData)
       dispatch(updateCurrentUser(userData))
 
-      user && history.push('/rooms')
+      user && history.push(getPath('rooms'))
     } catch (err) {
       console.log('err', err.message)
       setError(err.message)

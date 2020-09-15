@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { signin } from '../helpers/auth'
+import { getPath } from '../helpers/routes'
 
 const StyledLogin = styled.div`
   input {
@@ -22,7 +23,7 @@ const Login = ({ history }) => {
     setError('')
     try {
       const user = await signin(email, password)
-      user && history.push('/rooms')
+      user && history.push(getPath('rooms'))
     } catch (err) {
       setError(err.message)
     }
