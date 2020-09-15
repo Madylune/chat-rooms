@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   Route,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Redirect
 } from 'react-router-dom'
@@ -60,7 +60,7 @@ class App extends Component {
     return loading 
       ? <h2>Loading...</h2>
       : (
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router>
           <Switch>
             <Route exact path={getPath('home')} component={Home}></Route>
             <PrivateRoute path={getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
