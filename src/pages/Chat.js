@@ -5,6 +5,7 @@ import { auth, db } from '../services/firebase'
 import { writeMessages, fetchRoomByCode } from '../helpers/db'
 import get from 'lodash/fp/get'
 import map from 'lodash/fp/map'
+import capitalize from 'lodash/capitalize'
 import Message from '../components/Message'
 import Header from '../components/Header'
 import IconButton from '@material-ui/core/IconButton'
@@ -137,11 +138,12 @@ class Chat extends Component {
 
   render() {
     const { messages, content, error, writeError, room } = this.state
+    const { code } = this.props
     return (
       <StyledChat>      
         <Header />
         <StyledContent>
-          <StyledTitle>{get('title', room)}</StyledTitle>
+          <StyledTitle>{get('title', room) || capitalize(code)}</StyledTitle>
           <StyledMessages>
             {map(message => 
               <Message key={get('timestamp', message)} message={message} />

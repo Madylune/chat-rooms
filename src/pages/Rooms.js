@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Button from '@material-ui/core/Button'
 import { createRoom } from '../helpers/db'
 import { getPath } from '../helpers/routes'
+import { db } from '../services/firebase'
 
 const StyledWrapper = styled.div`
   background-color: #a0d3ff;
@@ -34,7 +35,18 @@ class Rooms extends Component {
   state = {
     error: null,
     title: '',
-    access: ''
+    access: '',
+    rooms: []
+  }
+
+  async componentDidMount() {
+    try {
+      db.ref('/rooms').orderByChild('access').equalTo('public').on('value', snapshot => {
+        this.setState({ rooms: snapshot.val() })
+      })
+    } catch (err) {
+      console.log("Fail to fetch rooms", err)
+    }
   }
 
   handleSubmit = async e => {
@@ -59,7 +71,8 @@ class Rooms extends Component {
   handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
   render() {
-    const { error, title, access } = this.state
+    const { error, title, access, rooms } = this.state
+    console.log("rooms", rooms)
     return (
       <StyledWrapper>      
         <Header />
@@ -88,8 +101,11 @@ class Rooms extends Component {
           <h2>Or join an existing room:</h2>
           <StyledRooms>
             {map(room => (
-              <Link to="/chat" key={room.id}>{get('title', room) ? get('title', room) : 'Chat Room'} - {get('access', room)}</Link>
+              <Link to={getPath('room', { code: get('code', room) })} key={room.id}>{get('title', room) ? get('title', room) : 'Chat Room'} - {get('access', room)}</Link>
             ), ROOMS)}
+            {map(room => (
+              <Link to={getPath('room', { code: get('code', room) })} key={room.id}>{get('title', room) ? get('title', room) : 'Chat Room'} - {get('access', room)}</Link>
+            ), rooms)}
           </StyledRooms>
         </StyledContent>
       </StyledWrapper>
