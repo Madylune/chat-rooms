@@ -62,10 +62,10 @@ class App extends Component {
       : (
         <Router basename={process.env.PUBLIC_URL}>
           <Switch>
-            <Route exact path={getPath('home')} component={Home}></Route>
-            <PrivateRoute path={getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
-            <PrivateRoute path={getPath('room', { code: ':code' })} authenticated={authenticated} component={Chat}></PrivateRoute>
-            <PublicRoute path={getPath('signup')} authenticated={authenticated} component={Signup}></PublicRoute>
+            <Route exact path={process.env.PUBLIC_URL + getPath('home')} component={Home}></Route>
+            <PrivateRoute path={process.env.PUBLIC_URL + getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
+            <PrivateRoute path={process.env.PUBLIC_URL + getPath('room', { code: ':code' })} authenticated={authenticated} component={Chat}></PrivateRoute>
+            <PublicRoute path={process.env.PUBLIC_URL + getPath('signup')} authenticated={authenticated} component={Signup}></PublicRoute>
           </Switch>
         </Router>
       )
