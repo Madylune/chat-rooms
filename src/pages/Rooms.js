@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../components/Header'
@@ -30,15 +30,18 @@ const StyledRooms = styled.div`
   flex-direction: column;
 `
 
-const Rooms = ({ history }) => {
-  const [ error, setError ] = useState(null)
-  const [ title, setTitle ] = useState('')
-  const [ access, setAccess ] = useState('')
-  const currentUser = useSelector(state => state.currentUser)
+class Rooms extends Component {
+  state = {
+    error: null,
+    title: '',
+    access: ''
+  }
 
-  const handleSubmit = async e => {
+  handleSubmit = async e => {
+    const { history, currentUser } = this.props
+    const { title, access } = this.state
     e.preventDefault()
-    setError('')
+    this.setState({ error: '' })
     try {
       const roomEntity = {
         title,
@@ -49,44 +52,53 @@ const Rooms = ({ history }) => {
       const room = await createRoom(roomEntity)
       room && history.push(getPath('room', { code: get('code', room) }))
     } catch (err) {
-      setError(err.message)
+      this.setState({ error: err.message })
     }
   }
 
-  return (
-    <StyledWrapper>      
-      <Header />
-      <StyledContent>
-        <h2>Create your room !</h2>
-        <form onSubmit={handleSubmit}>
-          <TextField 
-            id="outlined-basic" 
-            label="Room's title" 
-            variant="outlined" 
-            name="title" 
-            onChange={e => setTitle(e.target.value)}
-            value={title} />
-          <RadioGroup aria-label="access" name="access" value={access} onChange={e => setAccess(e.target.value)}>
-            <FormControlLabel value="public" control={<Radio />} label="Public" />
-            <FormControlLabel value="private" control={<Radio />} label="Private" />
-          </RadioGroup>
-          <div>
-            {error ? <p>{error}</p> : null}
-            <Button variant="contained" color="primary" type="submit">
-              Create
-            </Button>
-          </div>
-        </form>
-        <hr></hr>
-        <h2>Or join an existing room:</h2>
-        <StyledRooms>
-          {map(room => (
-            <Link to="/chat" key={room.id}>{get('title', room) ? get('title', room) : 'Chat Room'} - {get('access', room)}</Link>
-          ), ROOMS)}
-        </StyledRooms>
-      </StyledContent>
-    </StyledWrapper>
-  )
+  handleChange = e => this.setState({ [e.target.name]: e.target.value })
+
+  render() {
+    const { error, title, access } = this.state
+    return (
+      <StyledWrapper>      
+        <Header />
+        <StyledContent>
+          <h2>Create your room !</h2>
+          <form onSubmit={this.handleSubmit}>
+            <TextField 
+              id="outlined-basic" 
+              label="Room's title" 
+              variant="outlined" 
+              name="title" 
+              onChange={this.handleChange}
+              value={title} />
+            <RadioGroup aria-label="access" name="access" value={access} onChange={this.handleChange}>
+              <FormControlLabel value="public" control={<Radio />} label="Public" />
+              <FormControlLabel value="private" control={<Radio />} label="Private" />
+            </RadioGroup>
+            <div>
+              {error ? <p>{error}</p> : null}
+              <Button variant="contained" color="primary" type="submit">
+                Create
+              </Button>
+            </div>
+          </form>
+          <hr></hr>
+          <h2>Or join an existing room:</h2>
+          <StyledRooms>
+            {map(room => (
+              <Link to="/chat" key={room.id}>{get('title', room) ? get('title', room) : 'Chat Room'} - {get('access', room)}</Link>
+            ), ROOMS)}
+          </StyledRooms>
+        </StyledContent>
+      </StyledWrapper>
+    )
+  }
 }
 
-export default withRouter(Rooms)
+const mapStateToProps = state => ({
+  currentUser: state.currentUser
+})
+
+export default withRouter(connect(mapStateToProps)(Rooms))

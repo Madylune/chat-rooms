@@ -105,7 +105,7 @@ class Chat extends Component {
     const { code } = this.props
     this.setState({ readError: null })
     try {
-      db.ref('/messages').orderByChild('code').equalTo(code).on('value', snapshot => {
+      db.ref('/messages').orderByChild('room').equalTo(code).on('value', snapshot => {
         this.setState({ messages: snapshot.val() })
       })
       const room = await fetchRoomByCode(code)
@@ -118,13 +118,15 @@ class Chat extends Component {
   handleChange = e => this.setState({ content: e.target.value })
 
   handleSubmit = async e => {
+    const { room, user, content } = this.state
     e.preventDefault()
     this.setState({ writeError: null })
     try {
       const message = {
-        content: this.state.content,
+        content: content,
         timestamp: Date.now(),
-        uid: this.state.user.uid
+        uid: user.uid,
+        room: room.code
       }
       await writeMessages(message)
       this.setState({ content: '' })

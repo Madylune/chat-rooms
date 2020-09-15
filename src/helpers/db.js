@@ -45,7 +45,8 @@ export const writeMessages = async message => {
   const entity = {
     content: message.content,
     timestamp: message.timestamp,
-    userId: message.uid
+    userId: message.uid,
+    room: message.room
   }
   await addFirebaseNode({
     path: '/messages',
