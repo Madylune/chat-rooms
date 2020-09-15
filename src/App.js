@@ -60,7 +60,7 @@ class App extends Component {
     return loading 
       ? <h2>Loading...</h2>
       : (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <Switch>
             <Route exact path={getPath('home')} component={Home}></Route>
             <PrivateRoute path={getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
