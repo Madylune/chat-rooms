@@ -1,5 +1,6 @@
 import { db } from '../services/firebase'
 import get from 'lodash/fp/get'
+import { generateRoomCode } from './utils'
 
 export const addFirebaseNode = async ({ path, entity }) => {
   const ref = db.ref(path)
@@ -67,4 +68,19 @@ export const fetchUserById = async userId => {
     path: `users/${userId}`
   })
   return user
+}
+
+export const createRoom = async data => {
+  const entity = {
+    title: data.title,
+    createdAt: data.timestamp,
+    createBy: data.userId,
+    access: data.access,
+    code: generateRoomCode()
+  }
+  const room = await addFirebaseNode({
+    path: '/rooms',
+    entity
+  })
+  return room
 }

@@ -8,9 +8,11 @@ import {
 import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Signup from './pages/Signup'
+import Rooms from './pages/Rooms'
 import { auth } from './services/firebase'
 import { dispatch } from './services/store'
 import { updateCurrentUser } from './actions/currentUser'
+import { getPath } from './helpers/routes'
 
 const PrivateRoute = ({ component: Component, authenticated, ...rest }) => 
   <Route 
@@ -26,7 +28,7 @@ const PublicRoute = ({ component: Component, authenticated, ...rest }) =>
     {...rest}
     render={props => !authenticated
       ? <Component {...props} />
-      : <Redirect to="/chat" />
+      : <Redirect to="/rooms" />
     }
   />
 
@@ -61,6 +63,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Home}></Route>
+            <PrivateRoute path="/rooms" authenticated={authenticated} component={Rooms}></PrivateRoute>
+            <PrivateRoute path={getPath('room', { code: ':code' })} authenticated={authenticated} component={Chat}></PrivateRoute>
             <PrivateRoute path="/chat" authenticated={authenticated} component={Chat}></PrivateRoute>
             <PublicRoute path="/signup" authenticated={authenticated} component={Signup}></PublicRoute>
           </Switch>

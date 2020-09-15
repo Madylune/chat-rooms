@@ -22,7 +22,7 @@ const Login = ({ history }) => {
     setError('')
     try {
       const user = await signin(email, password)
-      user && history.push('/chat')
+      user && history.push('/rooms')
     } catch (err) {
       setError(err.message)
     }

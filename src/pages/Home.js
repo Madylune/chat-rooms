@@ -32,7 +32,7 @@ const Home = ({ history }) => {
       await updateUserData(userData)
       dispatch(updateCurrentUser(userData))
 
-      user && history.push('/chat')
+      user && history.push('/rooms')
     } catch (err) {
       console.log('err', err.message)
       setError(err.message)
