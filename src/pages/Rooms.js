@@ -16,7 +16,7 @@ import { getPath } from '../helpers/routes'
 import { db } from '../services/firebase'
 
 const StyledWrapper = styled.div`
-  background-color: #a0d3ff;
+  background-color: #e4dcea;
   height: 100vh;
   margin: 0;
   overflow: hidden;

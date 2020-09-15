@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { signin } from '../helpers/auth'
 import { getPath } from '../helpers/routes'
+import Button from '@material-ui/core/Button'
 
 const StyledLogin = styled.div`
   input {
@@ -10,6 +11,13 @@ const StyledLogin = styled.div`
   }
   button {
     margin-right: 5px;
+  }
+`
+
+const StyledButton = styled(Button)`
+  && {
+    color: #ffffff;
+    border-color: #ffffff;
   }
 `
 
@@ -47,7 +55,9 @@ const Login = ({ history }) => {
           value={password}>
         </input>
         {error ? <p>{error}</p> : null}
-        <button type="submit">Sign in</button>
+        <StyledButton size="small" variant="outlined" type="submit">
+          Login
+        </StyledButton>
       </form>
     </StyledLogin>
   )

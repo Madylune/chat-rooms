@@ -5,9 +5,15 @@ import get from 'lodash/fp/get'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
 import Header from '../components/Header'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 const StyledForm = styled.form`
-  margin-top: 100px;
+  margin: 100px;
+`
+
+const StyledInput = styled.div`
+  margin: 10px 0;
 `
 
 const Signup = () => {
@@ -42,37 +48,37 @@ const Signup = () => {
         Sign Up
       </h1>
       <p>Fill in the form below to create an account.</p>
-      <div>
-        <input 
-          placeholder="Email" 
+      <StyledInput>
+        <TextField 
+          label="Email" 
+          variant="outlined" 
           name="email" 
-          type="email" 
+          type="email"
           onChange={e => setEmail(e.target.value)}
-          value={email}>
-        </input>
-      </div>
-      <div>
-        <input 
-          placeholder="Password" 
+          value={email} />
+      </StyledInput>
+      <StyledInput>
+        <TextField 
+          label="Password" 
+          variant="outlined" 
           name="password" 
-          type="password" 
+          type="password"
           onChange={e => setPassword(e.target.value)}
-          value={password}>
-        </input>
-      </div>
-      <div>
-        <label>Username: </label>
-        <input 
-          placeholder="Username" 
+          value={password} />
+      </StyledInput>
+      <StyledInput>
+        <TextField 
+          label="Username" 
+          variant="outlined" 
           name="username" 
-          type="username" 
           onChange={e => setUsername(e.target.value)}
-          value={username}>
-        </input>
-      </div>
+          value={username} />
+      </StyledInput>
       <div>
         {error ? <p>{error}</p> : null}
-        <button type="submit" disabled={disabled}>Sign up</button>
+        <Button variant="contained" color="primary" type="submit" disabled={disabled}>
+          Sign up
+        </Button>
       </div>
     </StyledForm>
   </div>

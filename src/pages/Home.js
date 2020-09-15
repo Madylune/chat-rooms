@@ -7,6 +7,8 @@ import get from 'lodash/fp/get'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
 import { getPath } from '../helpers/routes'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 const StyledHome = styled.div`
   text-align: center;
@@ -14,6 +16,18 @@ const StyledHome = styled.div`
 
 const StyledContent = styled.div`
   margin-top: 100px;
+`
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const StyledButton = styled(Button)`
+  && {
+    margin: 10px;
+  }
 `
 
 const Home = ({ history }) => {
@@ -49,18 +63,18 @@ const Home = ({ history }) => {
       <p>Create your account: <Link to="/signup">Sign Up</Link></p>
 
       <p>Or chat as guest: </p>
-      <form onSubmit={handleSubmit}>
-        <label>Username: </label>
-        <input 
-          placeholder="Username" 
+      <StyledForm onSubmit={handleSubmit}>
+        <TextField 
+          label="Username" 
+          variant="outlined" 
           name="username" 
-          type="username" 
           onChange={e => setUsername(e.target.value)}
-          value={username}>
-        </input>
+          value={username} />
         {error ? <p>{error}</p> : null}
-        <button type="submit">Start chatting !</button>
-      </form>
+        <StyledButton variant="contained" color="primary" type="submit">
+          Start chatting !
+        </StyledButton>
+      </StyledForm>
       </StyledContent>
     </StyledHome>
   )
