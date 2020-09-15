@@ -8,6 +8,7 @@ import Login from '../pages/Login'
 import { getPath } from '../helpers/routes'
 import { dispatch } from '../services/store'
 import { removeCurrentUser } from '../actions/currentUser'
+import Button from '@material-ui/core/Button'
 
 const StyledHeader = styled.div`
   position: absolute;
@@ -28,6 +29,13 @@ const StyledHeader = styled.div`
 const StyledLogo = styled.img`
   height: 100%;
   cursor: pointer;
+`
+
+const StyledButton = styled(Button)`
+  && {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
 `
 
 const Header = ({ history }) => {
@@ -53,7 +61,9 @@ const Header = ({ history }) => {
           <div>
             Login in as: <strong>{get('displayName', currentUser) ? get('displayName', currentUser) : 'Anonyme'}</strong>
           </div>
-          <button type="submit" onClick={logout}>Signout</button>
+          <StyledButton size="small" variant="outlined" type="submit" onClick={logout}>
+            Logout
+          </StyledButton>
         </>
       )
       : <Login />

@@ -38,6 +38,14 @@ const StyledTitle = styled.h1`
   }
 `
 
+const StyledInfo = styled.div`
+  color: red;
+  text-align: center;
+  @media (max-width: ${BREAKPOINTS.sm}) {
+    font-size: 10px;
+  }
+`
+
 const StyledMessages = styled.div`
   background-color: #ffffff;
   border: 3px solid #35aef5;
@@ -45,7 +53,7 @@ const StyledMessages = styled.div`
   padding: 15px;
   width: 70%;
   height: 70%;
-  overflow: scroll;
+  overflow-y: auto;
 
   @media (max-width: ${BREAKPOINTS.sm}) {
     width: 90%;
@@ -140,6 +148,7 @@ class Chat extends Component {
         <Header />
         <StyledContent>
           <StyledTitle>{get('title', room) || capitalize(code)}</StyledTitle>
+          {get('access', room) === 'private' && <StyledInfo>This room is private, invite your friends to join in: <strong>{get('location.href', window)}</strong></StyledInfo>}
           <StyledMessages>
             {map(message => 
               <Message key={get('timestamp', message)} message={message} />
