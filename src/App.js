@@ -62,7 +62,7 @@ class App extends Component {
       : (
         <Router>
           <Switch>
-            <Route exact path={getPath('home')} component={Home}></Route>
+            <PublicRoute exact path={getPath('home')} authenticated={authenticated} component={Home}></PublicRoute>
             <PrivateRoute path={getPath('rooms')} authenticated={authenticated} component={Rooms}></PrivateRoute>
             <PrivateRoute path={getPath('room', { code: ':code' })} authenticated={authenticated} component={Chat}></PrivateRoute>
             <PublicRoute path={getPath('signup')} authenticated={authenticated} component={Signup}></PublicRoute>
