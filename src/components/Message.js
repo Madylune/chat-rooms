@@ -44,7 +44,7 @@ const Message = ({ message }) => {
   return (
     <StyledWrapper>
       <StyledUser>
-        <AvatarBadge />
+        <AvatarBadge user={user} />
         <StyledUsername>{get('displayName', user) ? get('displayName', user) : 'Anonyme'}:</StyledUsername>
       </StyledUser>
       <StyledMessage isCurrentUser={isCurrentUser}>

@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { signup, updateUserData } from '../helpers/auth'
 import get from 'lodash/fp/get'
+import head from 'lodash/fp/head'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
 import Header from '../components/Header'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import SelectAvatar from '../components/SelectAvatar'
+import { AVATARS } from '../helpers/fixtures'
 
 const StyledForm = styled.form`
   margin: 100px;
@@ -21,6 +24,7 @@ const Signup = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ username, setUsername ] = useState('')
+  const [ avatar, setAvatar ] = useState(head(AVATARS))
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -29,7 +33,8 @@ const Signup = () => {
       const user = await signup(email, password)
       const userData = {
         ...get('user', user),
-        displayName: username
+        displayName: username,
+        photoURL: avatar
       }
       await updateUserData(userData)
       dispatch(updateCurrentUser(userData))
@@ -66,6 +71,7 @@ const Signup = () => {
           onChange={e => setPassword(e.target.value)}
           value={password} />
       </StyledInput>
+      <SelectAvatar setAvatar={setAvatar} avatar={avatar} />
       <StyledInput>
         <TextField 
           label="Username" 

@@ -1,3 +1,5 @@
+import times from 'lodash/fp/times'
+
 export const ROOMS = [
   {
     'title': 'General Room',
@@ -30,3 +32,5 @@ export const ROOMS = [
     'code': 'news'
   }
 ]
+
+export const AVATARS = times(i => `avatar-${i + 1}`, 8) 

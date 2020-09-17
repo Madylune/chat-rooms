@@ -4,11 +4,14 @@ import { signinAsGuest, updateUserData } from '../helpers/auth'
 import Header from '../components/Header'
 import styled from 'styled-components'
 import get from 'lodash/fp/get'
+import head from 'lodash/fp/head'
 import { dispatch } from '../services/store'
 import { updateCurrentUser } from '../actions/currentUser'
 import { getPath } from '../helpers/routes'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import SelectAvatar from '../components/SelectAvatar'
+import { AVATARS } from '../helpers/fixtures'
 
 const StyledHome = styled.div`
   text-align: center;
@@ -20,8 +23,8 @@ const StyledContent = styled.div`
 
 const StyledForm = styled.form`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 `
 
 const StyledButton = styled(Button)`
@@ -32,6 +35,7 @@ const StyledButton = styled(Button)`
 
 const Home = ({ history }) => {
   const [ error, setError ] = useState(null)
+  const [ avatar, setAvatar ] = useState(head(AVATARS))
   const [ username, setUsername ] = useState('')
 
   const handleSubmit = async e => {
@@ -41,7 +45,8 @@ const Home = ({ history }) => {
       const user = await signinAsGuest()
       const userData = {
         ...get('user', user),
-        displayName: username
+        displayName: username,
+        photoURL: avatar
       }
       
       await updateUserData(userData)
@@ -64,6 +69,7 @@ const Home = ({ history }) => {
 
       <p>Or chat as guest: </p>
       <StyledForm onSubmit={handleSubmit}>
+        <SelectAvatar setAvatar={setAvatar} avatar={avatar} />
         <TextField 
           label="Username" 
           variant="outlined" 
