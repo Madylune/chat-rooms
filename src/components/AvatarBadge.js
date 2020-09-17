@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import Badge from '@material-ui/core/Badge'
 import Avatar from '@material-ui/core/Avatar'
-import get from 'lodash/fp/get'
 
 const StyledBadge = styled(Badge)`
   && {
@@ -12,7 +11,7 @@ const StyledBadge = styled(Badge)`
   }
 `
 
-const AvatarBadge = ({ user }) => {
+const AvatarBadge = ({ userAvatar }) => {
   return (
     <div>
       <StyledBadge 
@@ -22,7 +21,7 @@ const AvatarBadge = ({ user }) => {
           horizontal: 'right',
         }}
       >
-        <Avatar alt="User's avatar" src={require(`../assets/avatars/${get('photoURL', user) ? get('photoURL', user) : 'avatar-1'}.jpg`)} />
+        <Avatar alt="User's avatar" src={require(`../assets/avatars/${userAvatar ? userAvatar : 'avatar-1'}.jpg`)} />
       </StyledBadge>
     </div>
   )
