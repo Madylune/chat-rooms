@@ -1,24 +1,31 @@
 {
   "files": {
     "main.css": "/chat-rooms/static/css/main.ecae11e3.chunk.css",
-    "main.js": "/chat-rooms/static/js/main.6b0cbef4.chunk.js",
-    "main.js.map": "/chat-rooms/static/js/main.6b0cbef4.chunk.js.map",
+    "main.js": "/chat-rooms/static/js/main.bf84d439.chunk.js",
+    "main.js.map": "/chat-rooms/static/js/main.bf84d439.chunk.js.map",
     "runtime-main.js": "/chat-rooms/static/js/runtime-main.598a1fec.js",
     "runtime-main.js.map": "/chat-rooms/static/js/runtime-main.598a1fec.js.map",
-    "static/js/2.355606c8.chunk.js": "/chat-rooms/static/js/2.355606c8.chunk.js",
-    "static/js/2.355606c8.chunk.js.map": "/chat-rooms/static/js/2.355606c8.chunk.js.map",
+    "static/js/2.f5bf844f.chunk.js": "/chat-rooms/static/js/2.f5bf844f.chunk.js",
+    "static/js/2.f5bf844f.chunk.js.map": "/chat-rooms/static/js/2.f5bf844f.chunk.js.map",
     "index.html": "/chat-rooms/index.html",
-    "precache-manifest.fc5eef623066522f019caf6f0f802729.js": "/chat-rooms/precache-manifest.fc5eef623066522f019caf6f0f802729.js",
+    "precache-manifest.427bf796d2d973474ae5fd71b86cc5d2.js": "/chat-rooms/precache-manifest.427bf796d2d973474ae5fd71b86cc5d2.js",
     "service-worker.js": "/chat-rooms/service-worker.js",
     "static/css/main.ecae11e3.chunk.css.map": "/chat-rooms/static/css/main.ecae11e3.chunk.css.map",
-    "static/js/2.355606c8.chunk.js.LICENSE.txt": "/chat-rooms/static/js/2.355606c8.chunk.js.LICENSE.txt",
-    "static/media/chatrooms_logo.png": "/chat-rooms/static/media/chatrooms_logo.ff196929.png",
-    "static/media/user.jpg": "/chat-rooms/static/media/user.3c77b7c2.jpg"
+    "static/js/2.f5bf844f.chunk.js.LICENSE.txt": "/chat-rooms/static/js/2.f5bf844f.chunk.js.LICENSE.txt",
+    "static/media/avatar-1.jpg": "/chat-rooms/static/media/avatar-1.419b61af.jpg",
+    "static/media/avatar-2.jpg": "/chat-rooms/static/media/avatar-2.84d9cafb.jpg",
+    "static/media/avatar-3.jpg": "/chat-rooms/static/media/avatar-3.38447929.jpg",
+    "static/media/avatar-4.jpg": "/chat-rooms/static/media/avatar-4.e4d0ffba.jpg",
+    "static/media/avatar-5.jpg": "/chat-rooms/static/media/avatar-5.cab40919.jpg",
+    "static/media/avatar-6.jpg": "/chat-rooms/static/media/avatar-6.7c609b74.jpg",
+    "static/media/avatar-7.jpg": "/chat-rooms/static/media/avatar-7.e1c2371f.jpg",
+    "static/media/avatar-8.jpg": "/chat-rooms/static/media/avatar-8.a4b9282a.jpg",
+    "static/media/chatrooms_logo.png": "/chat-rooms/static/media/chatrooms_logo.ff196929.png"
   },
   "entrypoints": [
     "static/js/runtime-main.598a1fec.js",
-    "static/js/2.355606c8.chunk.js",
+    "static/js/2.f5bf844f.chunk.js",
     "static/css/main.ecae11e3.chunk.css",
-    "static/js/main.6b0cbef4.chunk.js"
+    "static/js/main.bf84d439.chunk.js"
   ]
 }
